@@ -1,0 +1,7 @@
+https://example.com/index.html
+http://example.com/index.html
+https://www.example.com/index.html
+git+https://github.com/AVS-Origami/kiss-lint
+git+http://github.com/AVS-Origami/kiss-lint
+git+https://github.com/AVS-Origami/kiss-lint.git
+https://linuxfromscratch.org/patches/lfs/12.1/bzip2-1.0.8-install_docs-1.patch

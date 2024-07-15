@@ -1,0 +1,54 @@
+|-------------------------|
+| KISS LINT               |
+|-------------------------|
+| A package linter for    |
+| Kiss Linux.             |
+|-------------------------|
+|=~=~=~=~=~=~=~=~=~=~=~=~=|
+
+Kiss Lint is a WIP linter for Kiss Linux packages based on the style guide
+(https://kisscommunity.bvnf.space/kiss/style-guide).
+
+=== Building
+============
+
+Run 'cargo build --release'.
+
+=== Progress
+============
+
+This is a list of all parts of the style guide that are currently intended to
+be added. This may extend to other parts in future, but at the moment these are
+the parts that seem to be verifiable and/or are not covered by 'kiss c'.
+
+[ ] Build
+    [x] Shellcheck (#0201)
+    [ ] Indentation (#0202)
+    [ ] Line length (#0203)
+    [x] POSIX shell shebang (#0204)
+    [ ] Quote entire strings (#0209)
+    [ ] Prefer $CC (#0212)
+    [ ] Use -p with mkdir (#0213)
+    [ ] Printf instead of echo (#0214)
+    [ ] Avoid autogen.sh or autoreconf (#0401)
+
+[ ] Depends
+    [ ] Always available dependencies (#1202)
+    [ ] Make dependencies (#1203)
+    [ ] Sorted depends file (#1205)
+    [ ] Empty depends file (#1206)
+
+[x] Sources
+    [x] HTTPS sources (#1401)
+    [x] Remote patches (#1402)
+    [x] Git repositories (#1403)
+    [x] Sources with www. and .git (#1404)
+
+[x] Version
+    [x] Git instead of 9999 (#1602)
+    [x] Upstream and relative versions (#1603)
+
+=== Contributing
+================
+
+Feel free to open an issue or pull request.
