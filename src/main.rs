@@ -58,12 +58,28 @@ fn main() -> Res<()> {
     rep.file = "build";
     for (i, line) in build.lines().enumerate() {
         rep.i = i;
+
         if i == 0 &&! line.starts_with("#!/bin/sh -e") {
             rep.err("missing or incorrect POSIX shebang (#0204)");
         }
 
         if i == 1 && line != "" {
             rep.err("missing newline after shebang (#0204)");
+        }
+
+        let mut line_started = false;
+        for (i, c) in line.chars().enumerate() {
+            if c != ' ' &&! line_started {
+                line_started = true;
+                match i % 4 {
+                    0 => (),
+                    _ => rep.err("incorrect indentation; use four spaces (#0202)"),
+                }
+            }
+        }
+
+        if line.len() > 80 {
+            rep.err("line exceeds 80 chars (#0203)");
         }
     }
 

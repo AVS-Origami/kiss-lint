@@ -23,14 +23,14 @@ the parts that seem to be verifiable and/or are not covered by 'kiss c'.
 
 [ ] Build
     [x] Shellcheck (#0201)
-    [ ] Indentation (#0202)
-    [ ] Line length (#0203)
+    [x] Indentation (#0202)
+    [x] Line length (#0203)
     [x] POSIX shell shebang (#0204)
     [ ] Quote entire strings (#0209)
     [ ] Prefer $CC (#0212)
     [ ] Use -p with mkdir (#0213)
     [ ] Printf instead of echo (#0214)
-    [ ] Avoid autogen.sh or autoreconf (#0401)
+    [ ] Build styles (#0400 thru #1150)
 
 [ ] Depends
     [ ] Always available dependencies (#1202)
