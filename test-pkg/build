@@ -1,2 +1,11 @@
 #!/bin/sh
-   stuff
+  2 space indent
+this line is too looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong
+	tab indent
+ok indent
+        8 space indent
+ok indent
+    ok indent
+            not ok indent
+            not ok indent
+    ok indent

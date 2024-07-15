@@ -56,8 +56,45 @@ fn main() -> Res<()> {
 
     let build = fs::read_to_string("build")?;
     rep.file = "build";
+    let mut indent = vec![];
     for (i, line) in build.lines().enumerate() {
         rep.i = i;
+
+        let mut line_started = false;
+        for (j, c) in line.chars().enumerate() {
+            if c != ' ' &&! line_started {
+                line_started = true;
+                match j % 4 {
+                    0 => {
+                        if c.is_whitespace() {
+                            rep.err("incorrect indentation; use four spaces (#0202)");
+                        } else {
+                            indent.push(j);
+                        }
+
+                        if indent.len() >= 2 && j != 0 {
+                            let last_idx = indent.len() - 1;
+                            let ident_diff = (indent[last_idx] as i64 - indent[last_idx - 1] as i64).abs() as usize;
+                            match ident_diff {
+                                0 | 4 => (),
+                                x => {
+                                    rep.err("incorrect indentation: use four spaces (#0202)");
+                                    indent[last_idx] = j - x;
+                                },
+                            }
+                        }
+                    },
+                    _ => {
+                        rep.err("incorrect indentation; use four spaces (#0202)");
+                        indent.push(0);
+                    },
+                }
+            }
+        }
+
+        if line.len() > 80 {
+            rep.err("line exceeds 80 chars (#0203)");
+        }
 
         if i == 0 &&! line.starts_with("#!/bin/sh -e") {
             rep.err("missing or incorrect POSIX shebang (#0204)");
@@ -67,20 +104,6 @@ fn main() -> Res<()> {
             rep.err("missing newline after shebang (#0204)");
         }
 
-        let mut line_started = false;
-        for (i, c) in line.chars().enumerate() {
-            if c != ' ' &&! line_started {
-                line_started = true;
-                match i % 4 {
-                    0 => (),
-                    _ => rep.err("incorrect indentation; use four spaces (#0202)"),
-                }
-            }
-        }
-
-        if line.len() > 80 {
-            rep.err("line exceeds 80 chars (#0203)");
-        }
     }
 
 
