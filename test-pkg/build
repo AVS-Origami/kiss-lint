@@ -9,3 +9,6 @@ ok indent
             not ok indent
             not ok indent
     ok indent
+
+this line has not fully quoted string "$1"/usr/bin
+this line has okay variable "$1/usr/bin"

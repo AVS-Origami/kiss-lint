@@ -140,6 +140,12 @@ fn main() -> Res<()> {
             rep.err("missing newline after shebang (#0204)");
         }
 
+        let tokens: Vec<&str> = line.split_whitespace().collect();
+        for tok in tokens {
+            if tok.contains("\"$") &&! (tok.starts_with("\"") && tok.ends_with("\"")) {
+                rep.err("quote entire string instead of variable (#0209)");
+            }
+        }
     }
 
 

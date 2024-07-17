@@ -33,3 +33,17 @@ pub const DEPS_MAKE: [&str; 7] = [
     "rust",
     "samurai",
 ];
+
+pub const _SEPARATORS: [char; 11] = [
+    ' ',
+    ',',
+    '.',
+    '/',
+    '|',
+    '(',
+    ')',
+    '[',
+    ']',
+    ':',
+    ';',
+];

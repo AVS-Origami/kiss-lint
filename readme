@@ -14,6 +14,12 @@ Kiss Lint is a WIP linter for Kiss Linux packages based on the style guide
 
 Run 'cargo build --release'.
 
+=== Testing
+===========
+
+The included 'test_pkg' is designed to throw every possible error that a package
+could generate. Try running '../target/release/kiss-lint' from inside it.
+
 === Progress
 ============
 
@@ -26,13 +32,13 @@ the parts that seem to be verifiable and/or are not covered by 'kiss c'.
     [x] Indentation (#0202)
     [x] Line length (#0203)
     [x] POSIX shell shebang (#0204)
-    [ ] Quote entire strings (#0209)
+    [x] Quote entire strings (#0209)
     [ ] Prefer $CC (#0212)
     [ ] Use -p with mkdir (#0213)
     [ ] Printf instead of echo (#0214)
     [ ] Build styles (#0400 thru #1150)
 
-[ ] Depends
+[x] Depends
     [x] Always available dependencies (#1202)
     [x] Make dependencies (#1203)
     [x] Sorted depends file (#1205)
