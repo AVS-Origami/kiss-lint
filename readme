@@ -1,9 +1,9 @@
 |-------------------------|
-| KISS LINT               |
-|-------------------------|
-| A package linter for    |
-| Kiss Linux.             |
-|-------------------------|
+| KISS LINT               |     ,   ,
+|-------------------------|    { \w/ }
+| A package linter for    |     `>!<`
+| Kiss Linux.             |     (/^\)
+|-------------------------|     '   '
 |=~=~=~=~=~=~=~=~=~=~=~=~=|
 
 Kiss Lint is a WIP linter for Kiss Linux packages based on the style guide
@@ -33,10 +33,10 @@ the parts that seem to be verifiable and/or are not covered by 'kiss c'.
     [ ] Build styles (#0400 thru #1150)
 
 [ ] Depends
-    [ ] Always available dependencies (#1202)
-    [ ] Make dependencies (#1203)
-    [ ] Sorted depends file (#1205)
-    [ ] Empty depends file (#1206)
+    [x] Always available dependencies (#1202)
+    [x] Make dependencies (#1203)
+    [x] Sorted depends file (#1205)
+    [x] Empty depends file (#1206)
 
 [x] Sources
     [x] HTTPS sources (#1401)

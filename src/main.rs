@@ -2,17 +2,19 @@ use std::error::Error;
 use std::fs;
 use std::process::{self, Command};
 
+mod config;
+
 type Res<T> = Result<T, Box<dyn Error>>;
 
 fn main() -> Res<()> {
     let kiss_c = Command::new("kiss").arg("c").status()?;
     if ! kiss_c.success() {
-        die("\"kiss c\" failed. Fix issues then try again.");
+        die("kiss c failed. Fix issues then try again.");
     }
 
     let shellcheck = Command::new("shellcheck").arg("build").status()?;
     if ! shellcheck.success() {
-        die("\"shellcheck\" failed. Fix issues then try again.");
+        die("shellcheck failed. Fix issues then try again.");
     }
 
     let mut rep = Reporter::new();
@@ -20,13 +22,13 @@ fn main() -> Res<()> {
     let version = fs::read_to_string("version")?;
     let version_fields: Vec<&str> = version.split_whitespace().collect();
     match version_fields.len() {
-        2 => if version_fields[0] == "9999" { eprintln!("version: use 'git' instead of 9999 (#1602)") },
+        2 => if version_fields[0] == "9999" { eprintln!("version: use git instead of 9999 (#1602)") },
         _ => eprintln!("version: too many fields; expected upstream and relative version number (#1603)"),
     }
 
     if fs::metadata("sources").is_ok() {
         let sources = fs::read_to_string("sources")?;
-        rep.file = "sources";
+        rep.file("sources");
         for (i, line) in sources.lines().enumerate() {
             rep.i = i;
 
@@ -54,8 +56,42 @@ fn main() -> Res<()> {
         warn("no sources file found.");
     }
 
+    if fs::metadata("depends").is_ok() {
+        let depends = fs::read_to_string("depends")?;
+        rep.file("depends");
+        rep.i = 0;
+        
+        if depends.trim().len() == 0 {
+            rep.err("empty depends file (#1206)");
+        } else {
+            for (i, line) in depends.lines().enumerate() {
+                rep.i = i;
+
+                for dep in &config::DEPS_ALWAYS_AVAIL {
+                    if line.starts_with(dep) {
+                        rep.err(&format!("dependency {dep} is always available (#1202)"));
+                    }
+                }
+
+                for dep in &config::DEPS_MAKE {
+                    if line.starts_with(dep) &&! line.ends_with(" make") {
+                        rep.err(&format!("build dependency {dep} is listed as runtime (#1203)"));
+                    }
+                }
+            }
+
+            let lines: Vec<&str> = depends.lines().collect();
+            let mut lines_sorted: Vec<&str> = lines.clone();
+            lines_sorted.sort_by(|a, b| a.to_lowercase().cmp(&b.to_lowercase()));
+
+            if lines_sorted != lines {
+                rep.err("depends file not sorted (#1205)");
+            }
+        }
+    }
+
     let build = fs::read_to_string("build")?;
-    rep.file = "build";
+    rep.file("build");
     let mut indent = vec![];
     for (i, line) in build.lines().enumerate() {
         rep.i = i;
@@ -118,6 +154,7 @@ fn main() -> Res<()> {
 
 struct Reporter {
     pub ok: bool,
+    pub tmp_ok: bool,
     pub i: usize,
     pub file: &'static str,
 }
@@ -126,13 +163,21 @@ impl Reporter {
     pub fn new() -> Self {
         Reporter {
             ok: true,
+            tmp_ok: true,
             i: 0,
             file: "",
         }
     }
 
+    pub fn file(&mut self, file: &'static str) {
+        self.file = file;
+        if !self.tmp_ok { eprintln!(); }
+        self.tmp_ok = true;
+    }
+
     pub fn err(&mut self, msg: &str) {
         self.ok = false;
+        self.tmp_ok = false;
         eprintln!("{} @ line {}: {msg}", self.file, self.i + 1);
     }
 }
