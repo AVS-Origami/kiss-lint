@@ -34,16 +34,12 @@ pub const DEPS_MAKE: [&str; 7] = [
     "samurai",
 ];
 
-pub const _SEPARATORS: [char; 11] = [
-    ' ',
-    ',',
-    '.',
-    '/',
-    '|',
-    '(',
-    ')',
-    '[',
-    ']',
-    ':',
+pub const CMD_SEP: [char; 2] = [
     ';',
+    '&',
+];
+
+pub const C_COMPILERS: [&str; 2] = [
+    "gcc",
+    "g++",
 ];

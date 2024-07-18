@@ -33,9 +33,9 @@ the parts that seem to be verifiable and/or are not covered by 'kiss c'.
     [x] Line length (#0203)
     [x] POSIX shell shebang (#0204)
     [x] Quote entire strings (#0209)
-    [ ] Prefer $CC (#0212)
-    [ ] Use -p with mkdir (#0213)
-    [ ] Printf instead of echo (#0214)
+    [x] Prefer $CC (#0212)
+    [x] Use -p with mkdir (#0213)
+    [x] Printf instead of echo (#0214)
     [ ] Build styles (#0400 thru #1150)
 
 [x] Depends

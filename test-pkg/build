@@ -12,3 +12,9 @@ ok indent
 
 this line has not fully quoted string "$1"/usr/bin
 this line has okay variable "$1/usr/bin"
+gcc bad_used_gcc_directly.c
+g++ bad_used_g++_directly.cpp
+mkdir pi; gcc bad.c
+mkdir -pv good mkdir && g++ bad.cpp
+echo bad & gcc bad.c
+echo bad && mkdir -v bad && echo bad

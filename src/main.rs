@@ -146,6 +146,31 @@ fn main() -> Res<()> {
                 rep.err("quote entire string instead of variable (#0209)");
             }
         }
+
+        let cmds: Vec<&str> = line.split(&config::CMD_SEP).collect();
+        for c in cmds {
+            let c = c.trim();
+            for comp in &config::C_COMPILERS {
+                if c.starts_with(comp) {
+                    rep.err(&format!("use $CC instead of {comp} (#0212)"));
+                }
+            }
+
+            if c.starts_with("mkdir") {
+                let c_parts: Vec<&str> = c.split_whitespace().collect();
+                if c_parts.len() > 1 {
+                    if !(c_parts[1].starts_with("-") && c_parts[1].contains("p")) {
+                        rep.err("use mkdir with -p flag (#0213)");
+                    }
+                } else {
+                    rep.err("use mkdir with -p flag (#0213)");
+                }
+            }
+
+            if c.starts_with("echo") {
+                rep.err("use printf instead of echo (#0214)");
+            }
+        }
     }
 
 
